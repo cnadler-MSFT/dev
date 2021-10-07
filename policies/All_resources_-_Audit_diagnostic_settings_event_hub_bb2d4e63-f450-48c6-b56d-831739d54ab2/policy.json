@@ -1,0 +1,52 @@
+{
+ "properties": {
+  "displayName": "All resources - Audit diagnostic settings event hub",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "All resources - Audit diagnostic settings event hub",
+  "metadata": {
+   "category": "Monitoring",
+   "createdBy": "f489fb11-801c-416b-9635-c95a48c3509a",
+   "createdOn": "2021-10-07T18:11:51.6627517Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "listOfResourceTypes": {
+    "type": "Array",
+    "metadata": {
+     "displayName": "Resource Types",
+     "description": null,
+     "strongType": "resourceTypes"
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "field": "type",
+    "in": "[parameters('listOfResourceTypes')]"
+   },
+   "then": {
+    "effect": "auditIfNotExists",
+    "details": {
+     "type": "Microsoft.Insights/diagnosticSettings",
+     "existenceCondition": {
+      "allOf": [
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+        "equals": "true"
+       },
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/eventHubName",
+        "exists": "true"
+       }
+      ]
+     }
+    }
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/a53133d6-5e51-49ab-8b9e-9ae3a61035f2/providers/Microsoft.Authorization/policyDefinitions/bb2d4e63-f450-48c6-b56d-831739d54ab2",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "bb2d4e63-f450-48c6-b56d-831739d54ab2"
+}
